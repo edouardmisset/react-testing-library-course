@@ -1,19 +1,19 @@
-import React from 'react'
-import {Router, Link, navigate} from '@reach/router'
-import {submitForm} from './api'
+import * as React from 'react'
+import { Router, Link, navigate } from '@reach/router'
+import { submitForm } from './api'
 
 const MultiPageForm = React.createContext()
 
-function MultiPageFormProvider({initialValues = {}, ...props}) {
+function MultiPageFormProvider({ initialValues = {}, ...props }) {
   const [initState] = React.useState(initialValues)
   const [form, setFormValues] = React.useReducer(
-    (s, a) => ({...s, ...a}),
+    (s, a) => ({ ...s, ...a }),
     initState,
   )
   const resetForm = () => setFormValues(initialValues)
   return (
     <MultiPageForm.Provider
-      value={{form, setFormValues, resetForm}}
+      value={{ form, setFormValues, resetForm }}
       {...props}
     />
   )
@@ -39,7 +39,7 @@ function Main() {
 }
 
 function Page1() {
-  const {form, setFormValues} = useMultiPageForm()
+  const { form, setFormValues } = useMultiPageForm()
   return (
     <>
       <h2>Page 1</h2>
@@ -53,7 +53,7 @@ function Page1() {
         <input
           id="food"
           value={form.food}
-          onChange={e => setFormValues({food: e.target.value})}
+          onChange={e => setFormValues({ food: e.target.value })}
         />
       </form>
       <Link to="/">Go Home</Link> | <Link to="/page-2">Next</Link>
@@ -62,7 +62,7 @@ function Page1() {
 }
 
 function Page2() {
-  const {form, setFormValues} = useMultiPageForm()
+  const { form, setFormValues } = useMultiPageForm()
   return (
     <>
       <h2>Page 2</h2>
@@ -76,7 +76,7 @@ function Page2() {
         <input
           id="drink"
           value={form.drink}
-          onChange={e => setFormValues({drink: e.target.value})}
+          onChange={e => setFormValues({ drink: e.target.value })}
         />
       </form>
       <Link to="/page-1">Go Back</Link> | <Link to="/confirm">Review</Link>
@@ -85,7 +85,7 @@ function Page2() {
 }
 
 function Confirm() {
-  const {form, resetForm} = useMultiPageForm()
+  const { form, resetForm } = useMultiPageForm()
   function handleConfirmClick() {
     submitForm(form).then(
       () => {
@@ -93,7 +93,7 @@ function Confirm() {
         navigate('/success')
       },
       error => {
-        navigate('/error', {state: {error}})
+        navigate('/error', { state: { error } })
       },
     )
   }
@@ -130,7 +130,7 @@ function Success() {
 
 function Error({
   location: {
-    state: {error},
+    state: { error },
   },
 }) {
   return (
@@ -145,7 +145,7 @@ function Error({
 
 function App() {
   return (
-    <MultiPageFormProvider initialValues={{food: '', drink: ''}}>
+    <MultiPageFormProvider initialValues={{ food: '', drink: '' }}>
       <Router>
         <Main default />
         <Page1 path="/page-1" />

@@ -1,6 +1,6 @@
-import React from 'react'
-import {render} from '@testing-library/react'
-import {axe} from 'jest-axe'
+import * as React from 'react'
+import { render } from '@testing-library/react'
+import { axe } from 'jest-axe'
 
 function InaccessibleForm() {
   return (
@@ -20,7 +20,7 @@ function AccessibleForm() {
 }
 
 test('inaccessible forms fail axe', async () => {
-  const {container} = render(<InaccessibleForm />)
+  const { container } = render(<InaccessibleForm />)
   // NOTE: I can't think of a situation where you'd want to test that some HTML
   // actually _does_ have accessibility issues... This is only here for
   // demonstration purposes.
@@ -28,6 +28,6 @@ test('inaccessible forms fail axe', async () => {
 })
 
 test('accessible forms pass axe', async () => {
-  const {container} = render(<AccessibleForm />)
+  const { container } = render(<AccessibleForm />)
   expect(await axe(container)).toHaveNoViolations()
 })

@@ -1,13 +1,13 @@
-import React from 'react'
-import {reportError} from './api'
+import * as React from 'react'
+import { reportError } from './api'
 
 class ErrorBoundary extends React.Component {
-  state = {hasError: false}
+  state = { hasError: false }
   componentDidCatch(error, info) {
-    this.setState({hasError: true})
+    this.setState({ hasError: true })
     reportError(error, info)
   }
-  tryAgain = () => this.setState({hasError: false})
+  tryAgain = () => this.setState({ hasError: false })
   render() {
     return this.state.hasError ? (
       <div>
@@ -20,4 +20,4 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-export {ErrorBoundary}
+export { ErrorBoundary }

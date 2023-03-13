@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 function Countdown() {
   const [remainingTime, setRemainingTime] = React.useState(10000)
@@ -18,4 +18,4 @@ function Countdown() {
   return remainingTime
 }
 
-export {Countdown}
+export { Countdown }

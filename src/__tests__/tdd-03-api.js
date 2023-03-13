@@ -1,7 +1,7 @@
-import React from 'react'
-import {render, fireEvent} from '@testing-library/react'
-import {savePost as mockSavePost} from '../api'
-import {Editor} from '../post-editor-03-api'
+import * as React from 'react'
+import { render, fireEvent } from '@testing-library/react'
+import { savePost as mockSavePost } from '../api'
+import { Editor } from '../post-editor-03-api'
 
 jest.mock('../api')
 
@@ -11,8 +11,8 @@ afterEach(() => {
 
 test('renders a form with title, content, tags, and a submit button', () => {
   mockSavePost.mockResolvedValueOnce()
-  const fakeUser = {id: 'user-1'}
-  const {getByLabelText, getByText} = render(<Editor user={fakeUser} />)
+  const fakeUser = { id: 'user-1' }
+  const { getByLabelText, getByText } = render(<Editor user={fakeUser} />)
   const fakePost = {
     title: 'Test Title',
     content: 'Test content',

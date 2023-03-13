@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 function Editor() {
   return (
@@ -17,4 +17,4 @@ function Editor() {
   )
 }
 
-export {Editor}
+export { Editor }

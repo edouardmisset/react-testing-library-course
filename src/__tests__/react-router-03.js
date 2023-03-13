@@ -1,8 +1,8 @@
-import React from 'react'
-import {Router} from 'react-router-dom'
-import {createMemoryHistory} from 'history'
-import {render as rtlRender, fireEvent} from '@testing-library/react'
-import {Main} from '../main'
+import * as React from 'react'
+import { Router } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
+import { render as rtlRender, fireEvent } from '@testing-library/react'
+import { Main } from '../main'
 
 // normally you'd put this logic in your test utility file so it can be used
 // for all of your tests.
@@ -10,11 +10,11 @@ function render(
   ui,
   {
     route = '/',
-    history = createMemoryHistory({initialEntries: [route]}),
+    history = createMemoryHistory({ initialEntries: [route] }),
     ...renderOptions
   } = {},
 ) {
-  function Wrapper({children}) {
+  function Wrapper({ children }) {
     return <Router history={history}>{children}</Router>
   }
   return {
@@ -30,7 +30,7 @@ function render(
 }
 
 test('main renders about and home and I can navigate to those pages', () => {
-  const {getByRole, getByText} = render(<Main />)
+  const { getByRole, getByText } = render(<Main />)
   expect(getByRole('heading')).toHaveTextContent(/home/i)
   fireEvent.click(getByText(/about/i))
   expect(getByRole('heading')).toHaveTextContent(/about/i)
@@ -39,7 +39,7 @@ test('main renders about and home and I can navigate to those pages', () => {
 })
 
 test('landing on a bad page shows no match component', () => {
-  const {getByRole} = render(<Main />, {
+  const { getByRole } = render(<Main />, {
     route: '/something-that-does-not-match',
   })
   expect(getByRole('heading')).toHaveTextContent(/404/i)

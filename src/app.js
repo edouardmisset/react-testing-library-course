@@ -1,19 +1,19 @@
-import React from 'react'
-import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
-import {submitForm} from './api'
+import * as React from 'react'
+import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom'
+import { submitForm } from './api'
 
 const MultiPageForm = React.createContext()
 
-function MultiPageFormProvider({initialValues = {}, ...props}) {
+function MultiPageFormProvider({ initialValues = {}, ...props }) {
   const [initState] = React.useState(initialValues)
   const [form, setFormValues] = React.useReducer(
-    (s, a) => ({...s, ...a}),
+    (s, a) => ({ ...s, ...a }),
     initState,
   )
   const resetForm = () => setFormValues(initialValues)
   return (
     <MultiPageForm.Provider
-      value={{form, setFormValues, resetForm}}
+      value={{ form, setFormValues, resetForm }}
       {...props}
     />
   )
@@ -38,8 +38,8 @@ function Main() {
   )
 }
 
-function Page1({history}) {
-  const {form, setFormValues} = useMultiPageForm()
+function Page1({ history }) {
+  const { form, setFormValues } = useMultiPageForm()
   return (
     <>
       <h2>Page 1</h2>
@@ -53,7 +53,7 @@ function Page1({history}) {
         <input
           id="food"
           value={form.food}
-          onChange={e => setFormValues({food: e.target.value})}
+          onChange={e => setFormValues({ food: e.target.value })}
         />
       </form>
       <Link to="/">Go Home</Link> | <Link to="/page-2">Next</Link>
@@ -61,8 +61,8 @@ function Page1({history}) {
   )
 }
 
-function Page2({history}) {
-  const {form, setFormValues} = useMultiPageForm()
+function Page2({ history }) {
+  const { form, setFormValues } = useMultiPageForm()
   return (
     <>
       <h2>Page 2</h2>
@@ -76,7 +76,7 @@ function Page2({history}) {
         <input
           id="drink"
           value={form.drink}
-          onChange={e => setFormValues({drink: e.target.value})}
+          onChange={e => setFormValues({ drink: e.target.value })}
         />
       </form>
       <Link to="/page-1">Go Back</Link> | <Link to="/confirm">Review</Link>
@@ -84,8 +84,8 @@ function Page2({history}) {
   )
 }
 
-function Confirm({history}) {
-  const {form, resetForm} = useMultiPageForm()
+function Confirm({ history }) {
+  const { form, resetForm } = useMultiPageForm()
   function handleConfirmClick() {
     submitForm(form).then(
       () => {
@@ -93,7 +93,7 @@ function Confirm({history}) {
         history.push('/success')
       },
       error => {
-        history.push('/error', {state: {error}})
+        history.push('/error', { state: { error } })
       },
     )
   }
@@ -130,7 +130,7 @@ function Success() {
 
 function Error({
   location: {
-    state: {error},
+    state: { error },
   },
 }) {
   return (
@@ -145,7 +145,7 @@ function Error({
 
 function App() {
   return (
-    <MultiPageFormProvider initialValues={{food: '', drink: ''}}>
+    <MultiPageFormProvider initialValues={{ food: '', drink: '' }}>
       <Router>
         <Switch>
           <Route path="/page-1" component={Page1} />

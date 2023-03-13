@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 function Editor() {
   const [isSaving, setIsSaving] = React.useState(false)
@@ -24,4 +24,4 @@ function Editor() {
   )
 }
 
-export {Editor}
+export { Editor }

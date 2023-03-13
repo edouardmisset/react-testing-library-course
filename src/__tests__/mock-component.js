@@ -1,6 +1,6 @@
-import React from 'react'
-import {render, fireEvent} from '@testing-library/react'
-import {HiddenMessage} from '../hidden-message'
+import * as React from 'react'
+import { render, fireEvent } from '@testing-library/react'
+import { HiddenMessage } from '../hidden-message'
 
 jest.mock('react-transition-group', () => {
   return {
@@ -10,7 +10,7 @@ jest.mock('react-transition-group', () => {
 
 test('shows hidden message when toggle is clicked', () => {
   const myMessage = 'hello world'
-  const {getByText, queryByText} = render(
+  const { getByText, queryByText } = render(
     <HiddenMessage>{myMessage}</HiddenMessage>,
   )
   const toggleButton = getByText(/toggle/i)

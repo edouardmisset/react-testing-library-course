@@ -1,8 +1,8 @@
-import React from 'react'
-import {render, fireEvent, wait} from '@testing-library/react'
-import {Redirect as MockRedirect} from 'react-router'
-import {savePost as mockSavePost} from '../api'
-import {Editor} from '../post-editor-04-router-redirect'
+import * as React from 'react'
+import { render, fireEvent, wait } from '@testing-library/react'
+import { Redirect as MockRedirect } from 'react-router'
+import { savePost as mockSavePost } from '../api'
+import { Editor } from '../post-editor-04-router-redirect'
 
 jest.mock('react-router', () => {
   return {
@@ -18,8 +18,8 @@ afterEach(() => {
 
 test('renders a form with title, content, tags, and a submit button', async () => {
   mockSavePost.mockResolvedValueOnce()
-  const fakeUser = {id: 'user-1'}
-  const {getByLabelText, getByText} = render(<Editor user={fakeUser} />)
+  const fakeUser = { id: 'user-1' }
+  const { getByLabelText, getByText } = render(<Editor user={fakeUser} />)
   const fakePost = {
     title: 'Test Title',
     content: 'Test content',
@@ -40,5 +40,5 @@ test('renders a form with title, content, tags, and a submit button', async () =
   })
   expect(mockSavePost).toHaveBeenCalledTimes(1)
 
-  await wait(() => expect(MockRedirect).toHaveBeenCalledWith({to: '/'}, {}))
+  await wait(() => expect(MockRedirect).toHaveBeenCalledWith({ to: '/' }, {}))
 })

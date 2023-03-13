@@ -1,5 +1,5 @@
-import React from 'react'
-import {CSSTransition} from 'react-transition-group'
+import * as React from 'react'
+import { CSSTransition } from 'react-transition-group'
 
 function Fade(props) {
   return (
@@ -7,7 +7,7 @@ function Fade(props) {
   )
 }
 
-function HiddenMessage({children}) {
+function HiddenMessage({ children }) {
   const [show, setShow] = React.useState(false)
   const toggle = () => setShow(s => !s)
   return (
@@ -20,4 +20,4 @@ function HiddenMessage({children}) {
   )
 }
 
-export {HiddenMessage}
+export { HiddenMessage }

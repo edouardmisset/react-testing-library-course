@@ -1,9 +1,9 @@
-import React from 'react'
-import {createStore} from 'redux'
-import {Provider} from 'react-redux'
-import {render as rtlRender, fireEvent} from '@testing-library/react'
-import {Counter} from '../redux-counter'
-import {reducer} from '../redux-reducer'
+import * as React from 'react'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { render as rtlRender, fireEvent } from '@testing-library/react'
+import { Counter } from '../redux-counter'
+import { reducer } from '../redux-reducer'
 
 // this is a handy function that I normally make available for all my tests
 // that deal with connected components.
@@ -16,7 +16,7 @@ function render(
     ...renderOptions
   } = {},
 ) {
-  function Wrapper({children}) {
+  function Wrapper({ children }) {
     return <Provider store={store}>{children}</Provider>
   }
   return {
@@ -32,14 +32,14 @@ function render(
 }
 
 test('can increment the value', () => {
-  const {getByLabelText, getByText} = render(<Counter />)
+  const { getByLabelText, getByText } = render(<Counter />)
   fireEvent.click(getByText('+'))
   expect(getByLabelText(/count/i)).toHaveTextContent('1')
 })
 
 test('can decrement the value', () => {
-  const {getByLabelText, getByText} = render(<Counter />, {
-    initialState: {count: 3},
+  const { getByLabelText, getByText } = render(<Counter />, {
+    initialState: { count: 3 },
   })
   fireEvent.click(getByText('-'))
   expect(getByLabelText(/count/i)).toHaveTextContent('2')

@@ -1,9 +1,9 @@
-import React from 'react'
-import {render, fireEvent, wait} from '@testing-library/react'
-import {build, fake, sequence} from 'test-data-bot'
-import {Redirect as MockRedirect} from 'react-router'
-import {savePost as mockSavePost} from '../api'
-import {Editor} from '../post-editor-08-custom-render'
+import * as React from 'react'
+import { render, fireEvent, wait } from '@testing-library/react'
+import { build, fake, sequence } from 'test-data-bot'
+import { Redirect as MockRedirect } from 'react-router'
+import { savePost as mockSavePost } from '../api'
+import { Editor } from '../post-editor-08-custom-render'
 
 jest.mock('react-router', () => {
   return {
@@ -45,7 +45,7 @@ function renderEditor() {
 
 test('renders a form with title, content, tags, and a submit button', async () => {
   mockSavePost.mockResolvedValueOnce()
-  const {submitButton, fakePost, fakeUser} = renderEditor()
+  const { submitButton, fakePost, fakeUser } = renderEditor()
   const preDate = new Date().getTime()
 
   fireEvent.click(submitButton)
@@ -64,13 +64,13 @@ test('renders a form with title, content, tags, and a submit button', async () =
   expect(date).toBeGreaterThanOrEqual(preDate)
   expect(date).toBeLessThanOrEqual(postDate)
 
-  await wait(() => expect(MockRedirect).toHaveBeenCalledWith({to: '/'}, {}))
+  await wait(() => expect(MockRedirect).toHaveBeenCalledWith({ to: '/' }, {}))
 })
 
 test('renders an error message from the server', async () => {
   const testError = 'test error'
-  mockSavePost.mockRejectedValueOnce({data: {error: testError}})
-  const {submitButton, findByRole} = renderEditor()
+  mockSavePost.mockRejectedValueOnce({ data: { error: testError } })
+  const { submitButton, findByRole } = renderEditor()
 
   fireEvent.click(submitButton)
 
