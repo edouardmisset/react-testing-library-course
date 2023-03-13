@@ -1,16 +1,14 @@
 import * as React from 'react'
 import user from '@testing-library/user-event'
-import { render } from '@testing-library/react'
-import { FavoriteNumber } from '../favorite-number'
+import {render, screen} from '@testing-library/react'
+import {FavoriteNumber} from '../favorite-number'
 
 test('entering an invalid value shows an error message', () => {
-  const { getByLabelText, getByRole, rerender, debug } = render(
-    <FavoriteNumber />,
-  )
-  const input = getByLabelText(/favorite number/i)
+  render(<FavoriteNumber />)
+  const input = screen.getByLabelText(/favorite number/i)
   user.type(input, '10')
-  expect(getByRole('alert')).toHaveTextContent(/the number is invalid/i)
-  debug()
-  rerender(<FavoriteNumber max={10} />)
-  debug()
+  expect(screen.getByRole('alert')).toHaveTextContent(/the number is invalid/i)
+  screen.debug()
+  render(<FavoriteNumber max={10} />)
+  screen.debug()
 })
