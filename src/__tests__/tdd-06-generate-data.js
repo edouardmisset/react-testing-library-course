@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { render, fireEvent, wait } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { render, wait, screen } from '@testing-library/react'
 import { build, fake, sequence } from 'test-data-bot'
 import { Redirect as MockRedirect } from 'react-router'
 import { savePost as mockSavePost } from '../api'
@@ -29,16 +30,16 @@ const userBuilder = build('User').fields({
 test('renders a form with title, content, tags, and a submit button', async () => {
   mockSavePost.mockResolvedValueOnce()
   const fakeUser = userBuilder()
-  const { getByLabelText, getByText } = render(<Editor user={fakeUser} />)
+  render(<Editor user={fakeUser} />)
   const fakePost = postBuilder()
   const preDate = new Date().getTime()
 
-  getByLabelText(/title/i).value = fakePost.title
-  getByLabelText(/content/i).value = fakePost.content
-  getByLabelText(/tags/i).value = fakePost.tags.join(', ')
-  const submitButton = getByText(/submit/i)
+  screen.getByLabelText(/title/i).value = fakePost.title
+  screen.getByLabelText(/content/i).value = fakePost.content
+  screen.getByLabelText(/tags/i).value = fakePost.tags.join(', ')
+  const submitButton = screen.getByText(/submit/i)
 
-  fireEvent.click(submitButton)
+  userEvent.click(submitButton)
 
   expect(submitButton).toBeDisabled()
 

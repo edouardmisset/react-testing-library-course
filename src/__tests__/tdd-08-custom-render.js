@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { render, fireEvent, wait } from '@testing-library/react'
+import { render, wait, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { build, fake, sequence } from 'test-data-bot'
 import { Redirect as MockRedirect } from 'react-router'
 import { savePost as mockSavePost } from '../api'
@@ -31,10 +32,10 @@ function renderEditor() {
   const utils = render(<Editor user={fakeUser} />)
   const fakePost = postBuilder()
 
-  utils.getByLabelText(/title/i).value = fakePost.title
-  utils.getByLabelText(/content/i).value = fakePost.content
-  utils.getByLabelText(/tags/i).value = fakePost.tags.join(', ')
-  const submitButton = utils.getByText(/submit/i)
+  screen.getByLabelText(/title/i).value = fakePost.title
+  screen.getByLabelText(/content/i).value = fakePost.content
+  screen.getByLabelText(/tags/i).value = fakePost.tags.join(', ')
+  const submitButton = screen.getByText(/submit/i)
   return {
     ...utils,
     submitButton,
@@ -48,7 +49,7 @@ test('renders a form with title, content, tags, and a submit button', async () =
   const { submitButton, fakePost, fakeUser } = renderEditor()
   const preDate = new Date().getTime()
 
-  fireEvent.click(submitButton)
+  userEvent.click(submitButton)
 
   expect(submitButton).toBeDisabled()
 
@@ -70,11 +71,11 @@ test('renders a form with title, content, tags, and a submit button', async () =
 test('renders an error message from the server', async () => {
   const testError = 'test error'
   mockSavePost.mockRejectedValueOnce({ data: { error: testError } })
-  const { submitButton, findByRole } = renderEditor()
+  const { submitButton } = renderEditor()
 
-  fireEvent.click(submitButton)
+  userEvent.click(submitButton)
 
-  const postError = await findByRole('alert')
+  const postError = await screen.findByRole('alert')
   expect(postError).toHaveTextContent(testError)
-  expect(submitButton).not.toBeDisabled()
+  expect(submitButton).toBeEnabled()
 })
